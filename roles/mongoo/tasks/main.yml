@@ -1,0 +1,44 @@
+---
+# tasks file for mongoo
+
+- name: "Instalando Mongoo"
+  apt:
+    name: mongodb
+    state: present
+    update_cache: yes
+
+- name: "Ajusta mongodb.conf"
+  replace:
+    path: /etc/mongodb.conf
+    regexp: 'bind_ip = 127.0.0.1'
+    replace: 'bind_ip = 0.0.0.0'
+    backup: yes
+  notify:
+    - inicia mongodb
+
+- name: "Instalando o docker"
+  apt:
+    name: docker.io
+    state: present
+  notify:
+    - inicia docker
+
+- name: "Instalação do docker para o python"
+  pip:
+    name: docker
+
+
+- name: "Criando o container do mongodb express"
+  docker_container:
+    name: mongoexpress
+    image: mongo-express:0.54.0
+    state: started
+    network_mode: host      
+    ports:
+      - '8081:8081'
+    env: 
+      ME_CONFIG_MONGODB_ADMINUSERNAME: "{{ user_mongo }}"
+      ME_CONFIG_MONGODB_ADMINPASSWORD: "{{ pass_mongo }}"
+      ME_CONFIG_MONGODB_SERVER: 127.0.0.1
+
+  

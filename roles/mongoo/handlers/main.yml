@@ -1,0 +1,19 @@
+---
+# handlers file for mongoo
+
+- name: "inicia mongodb"
+  systemd:
+    name: mongodb
+    state: started
+    enable: yes
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_DATABASE=auth
+      - MONGO_INITDB_ROOT_PASSWORD=Imp@ct@!
+    ports:
+      - '27017:27017'
+
+- name: inicia docker
+  service:
+    name: docker
+    state: started

@@ -1,0 +1,5 @@
+---
+# vars file for mongoo
+
+user_mongo: admin
+pass_mongo: Imp@ct@!

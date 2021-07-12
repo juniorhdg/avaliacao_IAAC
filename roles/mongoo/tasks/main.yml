@@ -28,7 +28,7 @@
     name: docker
 
 
-- name: "Criando o container do mongodb express"
+- name: "Criand0 o container do mongodb express"
   docker_container:
     name: mongoexpress
     image: mongo-express:0.54.0
